@@ -20,3 +20,4 @@ app.use((req, res) => {
 if (!module.parent) {
   app.listen(process.env.PORT || 8080);
 }
+export default app;
