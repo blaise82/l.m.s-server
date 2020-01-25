@@ -6,15 +6,15 @@ module.exports = (sequelize, DataTypes) => {
       required: true,
     },
     bookName: {
-      ype: DataTypes.STRING,
+      type: DataTypes.STRING,
       required: true,
     },
     author: {
-      ype: DataTypes.STRING,
+      type: DataTypes.STRING,
       required: true,
     },
     description: {
-      ype: DataTypes.STRING,
+      type: DataTypes.STRING,
       required: true,
     },
     bookPrice: {
@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       as: 'booked',
     });
 
-    Books.belongTo(models.Section, {
+    Books.belongsTo(models.Section, {
       foreignKey: 'sectionId',
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
