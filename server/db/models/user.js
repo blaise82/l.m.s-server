@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       required: true,
     },
     isAdmin: {
-      type: DataTypes.STRING,
+      type: DataTypes.BOOLEAN,
       required: true,
     },
   }, {});
