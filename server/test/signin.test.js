@@ -85,7 +85,7 @@ describe('signin in tests', () => {
       })
       .end((err, res) => {
         expect(res.body).to.have.keys('status', 'error');
-        expect(res.body.status).to.be.equal(404);
+        expect(res.body.status).to.be.equal(401);
         expect(res.body.error).to.be.equal('Incorrect username or password combination');
         expect(res.body.error).to.be.a('string');
         expect(res);
