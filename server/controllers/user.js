@@ -57,8 +57,8 @@ class UserController {
       });
 
       if (!isMember) {
-        return res.status(404).json({
-          status: 404,
+        return res.status(401).json({
+          status: 401,
           error: 'Incorrect username or password combination',
         });
       }
@@ -66,8 +66,8 @@ class UserController {
       const truePassword = await bcrypt.compareSync(password, isMember.password);
 
       if (!truePassword) {
-        return res.status(400).json({
-          status: 404,
+        return res.status(401).json({
+          status: 401,
           error: 'Incorrect username or password combination',
         });
       }
