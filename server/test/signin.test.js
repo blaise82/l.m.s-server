@@ -10,9 +10,9 @@ describe('signin in tests', () => {
       .request(app)
       .post('/api/v1/user/signup')
       .send({
-        fullName: 'ishimwe remo',
-        email: 'ad@yahoo.com',
-        password: 'test1345',
+        fullName: 'Rusimbi Patrick',
+        email: 'pat@email.com.com',
+        password: 'password',
       })
       .end((err, res) => {
         expect(res.status).to.equal(201);
@@ -30,8 +30,8 @@ describe('signin in tests', () => {
       .request(app)
       .post('/api/v1/user/signin')
       .send({
-        email: 'ad@yahoo.com',
-        password: 'test1345',
+        email: 'pat@email.com.com',
+        password: 'password',
       })
       .end((err, res) => {
         expect(res.body).to.have.keys('status', 'message', 'token');
