@@ -17,7 +17,7 @@
     "test": "NODE_ENV=test npm run migrateTest && NODE_ENV=test nyc --reporter=html --reporter=text mocha  --require @babel/register 'server/**/**test.js' --exit",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "start": "nodemon --exec babel-node server/index.js",
-    "createTables": "sequelize db:migrate",
+    "createTables": "sequelize db:migrate && sequelize db:seed:all",
     "migrateTest": "sequelize db:migrate:undo:all && sequelize db:migrate"
   },
   "repository": {
