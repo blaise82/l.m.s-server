@@ -59,7 +59,7 @@ class UserController {
       if (!isMember) {
         return res.status(404).json({
           status: 404,
-          message: 'Incorrect username or password combination',
+          error: 'Incorrect username or password combination',
         });
       }
 
@@ -68,7 +68,7 @@ class UserController {
       if (!truePassword) {
         return res.status(400).json({
           status: 404,
-          message: 'Incorrect username or password combination',
+          error: 'Incorrect username or password combination',
         });
       }
       const token = jwtHandler({ email, isAdmin: isMember.isAdmin });
