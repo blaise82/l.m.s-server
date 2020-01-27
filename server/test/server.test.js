@@ -14,13 +14,14 @@ describe('SERVER CONFIG CHECK', () => {
         done();
       });
   });
-  it('Should return Bad Request(400 wrong route)', (done) => {
+  it('Should return Bad Request(404 wrong route)', (done) => {
     chai
       .request(app)
       .get('/wrong')
       .end((err, res) => {
-        expect(res).to.have.status(400);
+        expect(res).to.have.status(404);
         expect(res.body).to.have.property('error');
+        expect(res.body.error).to.be.equal('Oh!, This Page does not exist');
         done();
       });
   });

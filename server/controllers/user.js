@@ -46,5 +46,44 @@ class UserController {
       });
     }
   }
+
+  static async login(req, res) {
+    try {
+      const { email, password } = req.body;
+      const isMember = await User.findOne({
+        where: {
+          email,
+        },
+      });
+
+      if (!isMember) {
+        return res.status(401).json({
+          status: 401,
+          error: 'Incorrect username or password combination',
+        });
+      }
+
+      const truePassword = await bcrypt.compareSync(password, isMember.password);
+
+      if (!truePassword) {
+        return res.status(401).json({
+          status: 401,
+          error: 'Incorrect username or password combination',
+        });
+      }
+      const token = jwtHandler({ email, isAdmin: isMember.isAdmin });
+
+      return res.status(200).json({
+        status: 200,
+        message: 'Successfully logged in',
+        token,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        error: error.message,
+      });
+    }
+  }
 }
 export default UserController;
