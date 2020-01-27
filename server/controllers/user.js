@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import uuid from 'uuid/v1';
 import { User } from '../db/models';
+import jwtHandler from '../helpers/jwtHandler';
 
 dotenv.config();
 class UserController {
@@ -27,11 +27,7 @@ class UserController {
         password: await bcrypt.hash(password, 10),
         isAdmin: false,
       });
-      const token = jwt.sign({
-        email: newUser.email,
-        isAdmin: newUser.isAdmin,
-
-      }, process.env.JWT_KEY);
+      const token = jwtHandler({ email: newUser.email, isAdmin: newUser.isAdmin });
       return res.status(201).json({
         status: 201,
         message: 'you have signup successfully',
