@@ -13,9 +13,9 @@ app.get('/', (req, res) => res.send('Server Is On'));
 app.use('/api/v1/user', userRoute);
 
 app.use((req, res) => {
-  res.status(400).send({
-    status: 400,
-    error: 'Bad Request',
+  res.status(404).send({
+    status: 404,
+    error: 'Oh!, This Page does not exist',
   });
 });
 
