@@ -1,12 +1,14 @@
 language: node_js
 node_js:
   - "stable"
-before_script:
-  - npm install
+before_install:
+  - npm install sequelize-cli -g  
+before-script:
+  - npm add sequelize-cli
 services:
 - postgresql
 before_script:
-- psql -c 'CREATE DATABASE mydiary;' -U postgres
+- psql -c 'CREATE DATABASE lms_testing;' -U postgres
 script:
   - npm test
 after_script:
