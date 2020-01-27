@@ -6,7 +6,7 @@ before_script:
 services:
 - postgresql
 before_script:
-- psql -c 'CREATE DATABASE mydiary;' -U postgres
+- psql -c 'CREATE DATABASE lms_testing;' -U postgres
 script:
   - npm test
 after_script:
