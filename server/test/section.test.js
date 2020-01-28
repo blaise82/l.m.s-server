@@ -39,7 +39,7 @@ describe('Section', () => {
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.property('status');
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.deep.equal('Awww, Snap!..Such kind of access token does not match any user!');
+        expect(res.body.message).to.deep.equal('Access denied!');
         done();
       });
   });

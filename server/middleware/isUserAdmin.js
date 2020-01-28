@@ -23,7 +23,7 @@ const isUserAdmin = async (req, res, next) => {
     if (user.length === 0) {
       return res.status(401).json({
         status: 401,
-        message: 'Awww, Snap!..Such kind of access token does not match any user!'
+        error: 'Access denied!'
       });
     }
     if(!isAdmin){
