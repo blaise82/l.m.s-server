@@ -9,34 +9,23 @@ const isUserAdmin = async (req, res, next) => {
   if (!token) {
     return res.status(401).json({
       status: 401,
-      message: 'System rejected. No access token found!',
+      error: 'System rejected. No access token found!',
     });
   }
 
   try {
     const { email, isAdmin } = jwt.verify(token, process.env.JWT_KEY);
-    const  user = await User.findAll({
-      where: {
-        email: email.trim(),
-      },
-    });
-    if (user.length === 0) {
-      return res.status(401).json({
-        status: 401,
-        error: 'Access denied!'
-      });
-    }
     if(!isAdmin){
       return res.status(403).json({
         status: 403,
-        message: 'You are not able to add section!'
+        error: 'You are not able to add section!'
       });
     }
     next();
   } catch (error) {
     return res.status(400).json({
       status: 400,
-      message: error.message
+      error: error.message
     });
   }
 };

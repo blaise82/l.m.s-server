@@ -20,26 +20,8 @@ describe('Section', () => {
         expect(res.status).to.equal(401);
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.property('status');
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.deep.equal('System rejected. No access token found!');
-        done();
-      });
-  });
-
-  it('it should reject request when token does not belong to any user', (done) => {
-    chai
-      .request(app)
-      .post('/api/v1/sections')
-      .send({
-        sectionName: 'Programming',
-      })
-      .set('x-auth-token', invalidUserToken)
-      .end((err, res) => {
-        expect(res.status).to.equal(401);
-        expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('status');
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.deep.equal('Access denied!');
+        expect(res.body).to.have.property('error');
+        expect(res.body.error).to.deep.equal('System rejected. No access token found!');
         done();
       });
   });
@@ -56,8 +38,8 @@ describe('Section', () => {
         expect(res.status).to.equal(403);
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.property('status');
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.deep.equal('You are not able to add section!');
+        expect(res.body).to.have.property('error');
+        expect(res.body.error).to.deep.equal('You are not able to add section!');
         done();
       });
   });
