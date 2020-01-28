@@ -9,6 +9,24 @@ const nonAdminAccessToken = generateAuthToken({email: 'ad@yahoo.com', isAdmin: f
 const withAdminAccessToken = generateAuthToken({email: 'ad@yahoo.com', isAdmin: true});
 chai.use(chaiHttp);
 describe('Section', () => {
+
+  it('it should not allow bad request', (done) => {
+    chai
+      .request(app)
+      .post('/api/v1/sections')
+      .send({
+        something: 'Novel',
+      })
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('status');
+        expect(res.body).to.have.property('error');
+        expect(res.body.error).to.deep.equal('"sectionName" is required');
+        done();
+      });
+  });
+
   it('it should not add section when no token provided', (done) => {
     chai
       .request(app)
