@@ -3,7 +3,6 @@ import uuid from 'uuid/v4';
 import { validationResult } from 'express-validator';
 import { Books, Section } from '../db/models';
 
-
 class bookController {
   static async createBook(req, res) {
     /**
