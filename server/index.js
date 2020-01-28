@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import userRoute from './routes/user';
+import sectionRoute from './routes/section';
 
 dotenv.config();
 const app = express();
@@ -11,6 +12,7 @@ app.use(bodyParser.json());
 
 app.get('/', (req, res) => res.send('Server Is On'));
 app.use('/api/v1/user', userRoute);
+app.use('/api/v1/sections', sectionRoute);
 
 app.use((req, res) => {
   res.status(404).send({
