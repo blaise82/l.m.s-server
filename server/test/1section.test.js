@@ -4,12 +4,10 @@ import { describe, it } from 'mocha';
 import app from '../index';
 import generateAuthToken from '../helpers/jwtHandler';
 
-const invalidUserToken = generateAuthToken({email: 'yewe@yewe.com', isAdmin: false});
-const nonAdminAccessToken = generateAuthToken({email: 'ad@yahoo.com', isAdmin: false});
-const withAdminAccessToken = generateAuthToken({email: 'ad@yahoo.com', isAdmin: true});
+const nonAdminAccessToken = generateAuthToken({ email: 'ad@yahoo.com', isAdmin: false });
+const withAdminAccessToken = generateAuthToken({ email: 'ad@yahoo.com', isAdmin: true });
 chai.use(chaiHttp);
 describe('Section', () => {
-
   it('it should not allow bad request', (done) => {
     chai
       .request(app)
@@ -67,7 +65,7 @@ describe('Section', () => {
       .request(app)
       .post('/api/v1/sections')
       .send({
-        sectionName: 'Programming',
+        sectionName: 'Programming'.toUpperCase().trim(),
       })
       .set('x-auth-token', withAdminAccessToken)
       .end((err, res) => {
@@ -85,7 +83,7 @@ describe('Section', () => {
       .request(app)
       .post('/api/v1/sections')
       .send({
-        sectionName: 'Programming',
+        sectionName: 'Programming'.toUpperCase().trim(),
       })
       .set('x-auth-token', withAdminAccessToken)
       .end((err, res) => {
@@ -97,5 +95,4 @@ describe('Section', () => {
         done();
       });
   });
-   
 });

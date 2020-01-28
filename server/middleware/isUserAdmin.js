@@ -1,6 +1,6 @@
+/* eslint-disable consistent-return */
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import { User } from '../db/models';
 
 dotenv.config();
 
@@ -14,18 +14,18 @@ const isUserAdmin = async (req, res, next) => {
   }
 
   try {
-    const { email, isAdmin } = jwt.verify(token, process.env.JWT_KEY);
-    if(!isAdmin){
+    const { isAdmin } = jwt.verify(token, process.env.JWT_KEY);
+    if (!isAdmin) {
       return res.status(403).json({
         status: 403,
-        error: 'You are not able to add section!'
+        error: 'You are not able to add section!',
       });
     }
     next();
   } catch (error) {
     return res.status(400).json({
       status: 400,
-      error: error.message
+      error: error.message,
     });
   }
 };

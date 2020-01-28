@@ -18,14 +18,14 @@ class SectionController {
       }
       const newSection = await Section.create({
         sectionId: uuid(),
-        sectionName: sectionName.trim(),
+        sectionName: sectionName.toUpperCase().trim(),
       });
       return res.status(201).json({
         status: 201,
         message: 'Section added successfully',
         data: {
           sectionId: newSection.sectionId,
-          sectionName: newSection.sectionName
+          sectionName: newSection.sectionName,
         },
       });
     } catch (err) {

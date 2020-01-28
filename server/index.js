@@ -1,8 +1,9 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
-import userRoute from './routes/user';
-import sectionRoute from './routes/section';
+import userRoute from './routes/user.routes';
+import sectionRoute from './routes/section.routes';
+import bookRoutes from './routes/book.routes';
 
 dotenv.config();
 const app = express();
@@ -10,9 +11,9 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => res.send('Server Is On'));
 app.use('/api/v1/user', userRoute);
 app.use('/api/v1/sections', sectionRoute);
+app.use('/api/v1/books', bookRoutes);
 
 app.use((req, res) => {
   res.status(404).send({
@@ -22,6 +23,6 @@ app.use((req, res) => {
 });
 
 if (!module.parent) {
-  app.listen(process.env.PORT || 8080);
+  app.listen(process.env.PORT || 5000);
 }
 export default app;
