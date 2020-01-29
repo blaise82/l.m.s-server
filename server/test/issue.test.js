@@ -9,6 +9,8 @@ chai.use(chaiHttp);
 
 const withAdminAccessToken = generateAuthToken({ email: 'abdoul@gmail.com', isAdmin: true });
 const nonAdminAccessToken = generateAuthToken({ email: 'ad@yahoo.com', isAdmin: false });
+const truemember = generateAuthToken({ email: 'member@gmail.com', isAdmin: false });
+const fakemember = generateAuthToken({ email: 'fake@yahoo.com', isAdmin: false });
 
 describe('Issue', () => {
   it('it should not allow issue with no token provided', (done) => {
@@ -122,6 +124,31 @@ describe('Issue', () => {
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.property('status');
         expect(res.body).to.have.property('error');
+        done();
+      });
+  });
+});
+describe('Borrowed', () => {
+  it('it should not allow fake users to view thier borrowed books', (done) => {
+    chai
+      .request(app)
+      .get('/api/v1/issue/member')
+      .set('x-auth-token', fakemember)
+      .end((err, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.body).to.have.property('error');
+        done();
+      });
+  });
+  it('it should allow a member to view books issued under his/her id', (done) => {
+    chai
+      .request(app)
+      .get('/api/v1/issue/member')
+      .set('x-auth-token', truemember)
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('message');
         done();
       });
   });

@@ -11,7 +11,7 @@ const isLoggedIn = async (req, res, next) => {
       },
     });
     if (validUser) {
-      req.user = verify;
+      req.user = validUser;
       next();
     } else {
       res.status(401).json({
