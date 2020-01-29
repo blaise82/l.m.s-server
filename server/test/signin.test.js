@@ -5,10 +5,10 @@ import app from '../index';
 
 chai.use(chaiHttp);
 describe('signin in tests', () => {
-  it('it should signup user if all data are given', (done) => {
+  it('it should signup auth if all data are given', (done) => {
     chai
       .request(app)
-      .post('/api/v1/user/signup')
+      .post('/api/v1/auth/signup')
       .send({
         fullName: 'Rusimbi Patrick',
         email: 'pat@email.com.com',
@@ -25,19 +25,19 @@ describe('signin in tests', () => {
       });
   });
 
-  it('It should login user successfuly', (done) => {
+  it('It should login auth successfuly', (done) => {
     chai
       .request(app)
-      .post('/api/v1/user/signin')
+      .post('/api/v1/auth/signin')
       .send({
         email: 'pat@email.com.com',
         password: 'password',
       })
       .end((err, res) => {
-        expect(res.body).to.have.keys('status', 'message', 'token');
+        expect(res.body).to.have.keys('status', 'message', 'data');
         expect(res.body.status).to.be.equal(200);
         expect(res.body.message).to.be.equal('Successfully logged in');
-        expect(res.body.token).to.be.a('string');
+        expect(res.body.data.token).to.be.a('string');
         expect(res);
         done();
       });
@@ -46,7 +46,7 @@ describe('signin in tests', () => {
   it('It should show an error if the email is missing', (done) => {
     chai
       .request(app)
-      .post('/api/v1/user/signin')
+      .post('/api/v1/auth/signin')
       .send({ })
       .end((err, res) => {
         expect(res.body).to.have.keys('status', 'error');
@@ -61,7 +61,7 @@ describe('signin in tests', () => {
   it('It should show an error if the password is missing', (done) => {
     chai
       .request(app)
-      .post('/api/v1/user/signin')
+      .post('/api/v1/auth/signin')
       .send({
         email: 'someemail@email.com',
       })
@@ -75,10 +75,10 @@ describe('signin in tests', () => {
       });
   });
 
-  it('It should show an error if the user tries to sign in with invalid credentials', (done) => {
+  it('It should show an error if the auth tries to sign in with invalid credentials', (done) => {
     chai
       .request(app)
-      .post('/api/v1/user/signin')
+      .post('/api/v1/auth/signin')
       .send({
         email: 'someemail@email.com',
         password: 'wrong',

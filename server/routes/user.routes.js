@@ -5,6 +5,6 @@ import signinValidator from '../middleware/validations/signinValidator';
 
 const router = express.Router();
 router.post('/signup', signupValidator, userController.signup);
-router.post('/signin', signinValidator, userController.login);
+router.post('/signin', signinValidator, userController.signin);
 
 export default router;

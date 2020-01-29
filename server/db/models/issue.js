@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Issued = sequelize.define('Issued', {
+  const Issues = sequelize.define('Issues', {
     memberID: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -17,19 +17,19 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
     },
   }, {});
-  Issued.associate = (models) => {
+  Issues.associate = (models) => {
     // associations can be defined here
-    Issued.belongsTo(models.User, {
+    Issues.belongsTo(models.User, {
       foreignKey: 'memberID',
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     });
 
-    Issued.belongsTo(models.Books, {
+    Issues.belongsTo(models.Books, {
       foreignKey: 'isbnNumber',
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     });
   };
-  return Issued;
+  return Issues;
 };

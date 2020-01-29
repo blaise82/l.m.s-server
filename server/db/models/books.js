@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
     });
 
-    Books.hasOne(models.Issued, {
+    Books.hasOne(models.Issues, {
       foreignKey: 'isbnNumber',
       as: 'bookIssued',
     });

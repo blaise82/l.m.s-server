@@ -5,10 +5,10 @@ import app from '../index';
 
 chai.use(chaiHttp);
 describe('Member signup', () => {
-  it('it should signup user if all data are given', (done) => {
+  it('it should signup auth if all data are given', (done) => {
     chai
       .request(app)
-      .post('/api/v1/user/signup')
+      .post('/api/v1/auth/signup')
       .send({
         fullName: 'ishimwe remo',
         email: 'ad@yahoo.com',
@@ -24,10 +24,10 @@ describe('Member signup', () => {
         done();
       });
   });
-  it('it shouldn\'t signup user if all data aren\'t given', (done) => {
+  it('it shouldn\'t signup auth if all data aren\'t given', (done) => {
     chai
       .request(app)
-      .post('/api/v1/user/signup')
+      .post('/api/v1/auth/signup')
       .send({
         fullName: 'ishimwe remo',
         email: 'add@yahoo.com',
@@ -40,10 +40,10 @@ describe('Member signup', () => {
         done();
       });
   });
-  it('it shouldn\'t signup user if all data aren\'t given', (done) => {
+  it('it shouldn\'t signup auth if all data aren\'t given', (done) => {
     chai
       .request(app)
-      .post('/api/v1/user/signup')
+      .post('/api/v1/auth/signup')
       .send({
         fullName: 'ishimwe remo',
         email: 'ad@yahoo.com',
