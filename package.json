@@ -63,7 +63,8 @@
     "include": "server",
     "exclude": [
       "build",
-      "**/index.js"
+      "**/index.js",
+      "**/db"
     ]
   }
 }
