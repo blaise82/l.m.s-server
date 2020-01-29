@@ -3,11 +3,18 @@ import { Section } from '../db/models';
 
 class SectionController {
   static async addSection(req, res) {
+    if (req.user.isAdmin !== true) {
+      return res.status(401).json({
+        status: 401,
+        error: 'You are not allowed to perform this action',
+      });
+    }
     const { sectionName } = req.body;
+    console.log(sectionName);
     try {
       const foundSection = await Section.findOne({
         where: {
-          sectionName: sectionName.trim(),
+          sectionName: sectionName.toUpperCase().trim(),
         },
       });
       if (foundSection) {

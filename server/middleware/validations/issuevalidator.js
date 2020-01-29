@@ -1,9 +1,9 @@
 import Joi from 'joi';
 
-const sectionValidator = (req, res, next) => {
+const issueValidator = (req, res, next) => {
   const schema = Joi.object().keys({
-    sectionName: Joi.string().required().min(3).max(25)
-      .trim()
+    memberID: Joi.string().guid(),
+    isbnNumber: Joi.string().guid(),
   });
   const { error } = Joi.validate(req.body, schema);
   if (error) {
@@ -14,4 +14,4 @@ const sectionValidator = (req, res, next) => {
   }
   return next();
 };
-export default sectionValidator;
+export default issueValidator;

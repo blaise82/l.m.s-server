@@ -47,7 +47,7 @@ class UserController {
     }
   }
 
-  static async login(req, res) {
+  static async signin(req, res) {
     try {
       const { email, password } = req.body;
       const isMember = await User.findOne({
@@ -76,7 +76,7 @@ class UserController {
       return res.status(200).json({
         status: 200,
         message: 'Successfully logged in',
-        token,
+        data: { token },
       });
     } catch (error) {
       return res.status(500).json({
