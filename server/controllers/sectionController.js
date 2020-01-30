@@ -44,6 +44,12 @@ class SectionController {
   }
 
   static async deleteSection(req, res) {
+    if (req.user.isAdmin !== true) {
+      return res.status(401).json({
+        status: 401,
+        error: 'You are not allowed to perform this action',
+      });
+    }
     try {
       const { section } = req.params;
       const sectionInDb = await Section.findOne({
