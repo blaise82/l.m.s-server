@@ -1,4 +1,4 @@
-import Chai, {expect} from 'chai';
+import Chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import index from '../index';
 import generateAuthToken from '../helpers/jwtHandler';
@@ -76,40 +76,36 @@ describe('Library management system', () => {
       });
   });
   describe('Deleting book', () => {
-    it('Should not allow non-integer params', (done) => {
-      Chai.request(index)
-        .delete('/api/v1/books/mmm')
-        .set('x-auth-token', adminAccessToken)
-        .end((err, res) => {
-          res.should.have.status(400);
-          res.body.should.have.property('error', 'Book id must be integer');
-        done();
-        });
-    });
-
     it('Should not fire up delete query when book doesn\'t exist', (done) => {
       Chai.request(index)
-        .delete('/api/v1/books/9000')
+        .delete('/api/v1/books/5ec8fd60-434b-11ea-9222-fbd05c974c49')
         .set('x-auth-token', adminAccessToken)
         .end((err, res) => {
           res.should.have.status(404);
           res.body.should.have.property('error', 'Book is not found');
-        done();
+          done();
+        });
+    });
+    it('Should not fire up delete query when book doesn\'t exist', (done) => {
+      Chai.request(index)
+        .delete('/api/v1/books/5ec8fd60-434b-14c49')
+        .set('x-auth-token', adminAccessToken)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have.property('error', 'Please use a valide id');
+          done();
         });
     });
 
     it('Should delete a book', (done) => {
       Chai.request(index)
-        .delete('/api/v1/books/1')
+        .delete('/api/v1/books/b70c27ce-80aa-40e2-98cf-eb5ebf734268')
         .set('x-auth-token', adminAccessToken)
         .end((err, res) => {
-          res.body.should.have.status(200)
+          res.body.should.have.status(200);
           res.body.should.have.property('message', 'Book deleted successfully');
-         expect(res.body.data).to.deep.equal([]);
-        done();
+          done();
         });
     });
-
-   })
-
+  });
 });

@@ -74,20 +74,21 @@ class bookController {
         error: error.message,
       });
     }
-  };
-  static async deleteBook(req, res){
+  }
 
-    try{
-       const bookId = req.params.bookId;
-       if(isNaN(bookId)){
-        return res.status(400).json({
-          status: 400,
-          error: 'Book id must be integer',
+  static async deleteBook(req, res) {
+    try {
+      if (req.user.isAdmin !== true) {
+        return res.status(401).json({
+          status: 401,
+          error: 'You are not allowed to perform this action',
         });
-       }
-       const bookExist = await Books.findOne({
+      }
+
+      const bookId = req.params.id;
+      const bookExist = await Books.findOne({
         where: {
-          id: bookId.trim(),
+          isbnNumber: bookId.trim(),
         },
       });
 
@@ -97,26 +98,23 @@ class bookController {
           error: 'Book is not found',
         });
       }
-     const deletedBook = await Books.destroy({
-          where:{
-            id: bookId
-          }
-     })
-     if(deletedBook){
-       return res.status(200).json({
-        status: 200,
-        message: 'Book deleted successfully',
-        data: []
-      })
-     }
-
+      const deletedBook = await Books.destroy({
+        where: {
+          isbnNumber: bookId,
+        },
+      });
+      if (deletedBook) {
+        return res.status(200).json({
+          status: 200,
+          message: 'Book deleted successfully',
+        });
+      }
     } catch (error) {
       return res.status(500).json({
         status: 500,
         error: error.message,
       });
     }
-
   }
 }
 
