@@ -18,7 +18,7 @@ app.get('/', (req, res) => res.send('Server Is On'));
 app.use('/api/v1/auth', userRoute);
 app.use('/api/v1/sections', sectionRoute);
 app.use('/api/v1/books', bookRoutes);
-app.use('/api/v1/issue', issueRoute);
+app.use('/api/v1/issues', issueRoute);
 
 app.use((req, res) => {
   res.status(404).send({

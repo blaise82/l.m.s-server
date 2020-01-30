@@ -5,6 +5,4 @@ import isLoggedIn from '../middleware/Auth/isLogged';
 
 const router = express.Router();
 router.post('/', [sectionValidator, isLoggedIn], sectionController.addSection);
-// routes.delete('/delete', );
-// routes.put('/update', );
 export default router;

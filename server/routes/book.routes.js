@@ -6,8 +6,7 @@ import validateBook from '../middleware/validations/bookValidator';
 
 const routes = Router();
 
-routes.post('/add', isLoggedIn, validateBook, bookController.createBook);
-// routes.delete('/delete', );
-// routes.put('/update', );
+routes.post('/', isLoggedIn, validateBook, bookController.createBook);
+routes.delete('/:bookId',isLoggedIn, bookController.deleteBook);
 
 export default routes;
