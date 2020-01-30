@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable max-len */
 import uuid from 'uuid/v4';
 import { validationResult } from 'express-validator';
@@ -115,6 +116,19 @@ class bookController {
         error: error.message,
       });
     }
+  }
+
+  static async viewAvailableBooks(req, res) {
+    const availableBooks = await Books.findAll({
+      where: {
+        status: 'available',
+      },
+    });
+    res.status(200).json({
+      status: 200,
+      message: 'All available books',
+      data: availableBooks,
+    });
   }
 }
 

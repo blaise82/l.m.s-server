@@ -7,6 +7,7 @@ import paramsValidator from '../middleware/validations/paramsValidator';
 const routes = Router();
 
 routes.post('/', isLoggedIn, validateBook, bookController.createBook);
+routes.get('/', isLoggedIn, bookController.viewAvailableBooks);
 routes.delete('/:id', [paramsValidator, isLoggedIn], bookController.deleteBook);
 
 export default routes;

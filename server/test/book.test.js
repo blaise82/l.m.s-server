@@ -1,4 +1,4 @@
-import Chai, { expect } from 'chai';
+import Chai from 'chai';
 import chaiHttp from 'chai-http';
 import index from '../index';
 import generateAuthToken from '../helpers/jwtHandler';
@@ -75,6 +75,19 @@ describe('Library management system', () => {
         done();
       });
   });
+
+  it('Should view all available books', (done) => {
+    Chai.request(index)
+      .get('/api/v1/books')
+      .set('x-auth-token', adminAccessToken)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.have.property('message', 'All available books');
+        res.body.should.have.property('data');
+        done();
+      });
+  });
+
   describe('Deleting book', () => {
     it('Should not fire up delete query when book doesn\'t exist', (done) => {
       Chai.request(index)
