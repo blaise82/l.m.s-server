@@ -10,7 +10,6 @@ class SectionController {
       });
     }
     const { sectionName } = req.body;
-    console.log(sectionName);
     try {
       const foundSection = await Section.findOne({
         where: {
@@ -40,6 +39,37 @@ class SectionController {
         status: 500,
         message: 'server error',
         data: err.message,
+      });
+    }
+  }
+
+  static async deleteSection(req, res) {
+    try {
+      const { section } = req.params;
+      const sectionInDb = await Section.findOne({
+        where: {
+          sectionName: section.toUpperCase(),
+        },
+      });
+      if (!sectionInDb) {
+        return res.status(404).send({
+          status: 404,
+          message: 'section not found',
+        });
+      }
+      await Section.destroy({
+        where: {
+          sectionName: sectionInDb.sectionName,
+        },
+      });
+      return res.status(200).json({
+        status: 200,
+        message: 'section deleted successfully',
+      });
+    } catch (err) {
+      return res.status(500).json({
+        status: 500,
+        message: 'server error',
       });
     }
   }
