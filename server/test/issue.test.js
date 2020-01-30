@@ -16,7 +16,7 @@ describe('Issue', () => {
   it('it should not allow issue with no token provided', (done) => {
     chai
       .request(app)
-      .post('/api/v1/issue/add')
+      .post('/api/v1/issues')
       .send({})
       .set('x-auth-token', '')
       .end((err, res) => {
@@ -30,7 +30,7 @@ describe('Issue', () => {
   it('it should not allow issue with member token provided', (done) => {
     chai
       .request(app)
-      .post('/api/v1/issue/add')
+      .post('/api/v1/issues')
       .send({})
       .set('x-auth-token', nonAdminAccessToken)
       .end((err, res) => {
@@ -45,7 +45,7 @@ describe('Issue', () => {
   it('it should not allow issue with member memberId provided not a UUID', (done) => {
     chai
       .request(app)
-      .post('/api/v1/issue/add')
+      .post('/api/v1/issues')
       .send({
         memberID: 'not uuid',
         isbnNumber: '5f199b40-41d3-11ea-8c38-dfcfa682960e',
@@ -62,7 +62,7 @@ describe('Issue', () => {
   it('it should not allow issue with isbnNumber provided not a UUID', (done) => {
     chai
       .request(app)
-      .post('/api/v1/issue/add')
+      .post('/api/v1/issues')
       .send({
         memberID: '5f199b40-41d3-11ea-8c38-dfcfa682960e',
         isbnNumber: 'not uuid',
@@ -79,7 +79,7 @@ describe('Issue', () => {
   it('it should not allow issue if memeberId provided do not exist', (done) => {
     chai
       .request(app)
-      .post('/api/v1/issue/add')
+      .post('/api/v1/issues')
       .send({
         memberID: '5f199b40-41d3-11ea-8c38-dfcfa682960e',
         isbnNumber: '5f199b40-41d3-11ea-8ba8-dfcfa682960e',
@@ -96,7 +96,7 @@ describe('Issue', () => {
   it('it should not allow issue if isbnNumber provided do not exist', (done) => {
     chai
       .request(app)
-      .post('/api/v1/issue/add')
+      .post('/api/v1/issues')
       .send({
         memberID: '5f199b40-41d3-11ea-8c38-dfcfa682960e',
         isbnNumber: '5f199b40-41d3-11ea-8ba8-dfcfa682960e',
@@ -113,7 +113,7 @@ describe('Issue', () => {
   it('it should allow admin to issue a book', (done) => {
     chai
       .request(app)
-      .post('/api/v1/issue/add')
+      .post('/api/v1/issues')
       .send({
         memberID: '5f199b40-41d3-11ea-8c38-dfcfa682960e',
         isbnNumber: '5f199b40-41d3-11ea-8ba8-dfcfa682960e',
@@ -132,7 +132,7 @@ describe('Borrowed', () => {
   it('it should not allow fake users to view thier borrowed books', (done) => {
     chai
       .request(app)
-      .get('/api/v1/issue/member')
+      .get('/api/v1/issues')
       .set('x-auth-token', fakemember)
       .end((err, res) => {
         expect(res.status).to.equal(401);
@@ -143,7 +143,7 @@ describe('Borrowed', () => {
   it('it should allow a member to view books issued under his/her id', (done) => {
     chai
       .request(app)
-      .get('/api/v1/issue/member')
+      .get('/api/v1/issues')
       .set('x-auth-token', truemember)
       .end((err, res) => {
         expect(res.status).to.equal(200);

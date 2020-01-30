@@ -2,12 +2,11 @@ import Router from 'express';
 import isLoggedIn from '../middleware/Auth/isLogged';
 import bookController from '../controllers/bookController';
 import validateBook from '../middleware/validations/bookValidator';
-
+import paramsValidator from '../middleware/validations/paramsValidator';
 
 const routes = Router();
 
-routes.post('/add', isLoggedIn, validateBook, bookController.createBook);
-// routes.delete('/delete', );
-// routes.put('/update', );
+routes.post('/', isLoggedIn, validateBook, bookController.createBook);
+routes.delete('/:id', [paramsValidator, isLoggedIn], bookController.deleteBook);
 
 export default routes;

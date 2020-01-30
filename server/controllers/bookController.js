@@ -75,6 +75,47 @@ class bookController {
       });
     }
   }
+
+  static async deleteBook(req, res) {
+    try {
+      if (req.user.isAdmin !== true) {
+        return res.status(401).json({
+          status: 401,
+          error: 'You are not allowed to perform this action',
+        });
+      }
+
+      const bookId = req.params.id;
+      const bookExist = await Books.findOne({
+        where: {
+          isbnNumber: bookId.trim(),
+        },
+      });
+
+      if (!bookExist) {
+        return res.status(404).json({
+          status: 404,
+          error: 'Book is not found',
+        });
+      }
+      const deletedBook = await Books.destroy({
+        where: {
+          isbnNumber: bookId,
+        },
+      });
+      if (deletedBook) {
+        return res.status(200).json({
+          status: 200,
+          message: 'Book deleted successfully',
+        });
+      }
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        error: error.message,
+      });
+    }
+  }
 }
 
 export default bookController;
