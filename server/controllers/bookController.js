@@ -178,11 +178,11 @@ class bookController {
       }
       const editBook = await Books.update(
         {
-          bookName: bookName || bookExist.bookName,
-          author: author || bookExist.author,
-          description: description || bookExist.description,
-          bookPrice: bookPrice || bookExist.bookPrice,
-          status: status || bookExist.status,
+          bookName,
+          author,
+          description,
+          bookPrice,
+          status,
           sectionId: sectionExist.sectionId,
         },
         {
