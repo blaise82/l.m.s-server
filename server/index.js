@@ -5,7 +5,7 @@ import userRoute from './routes/user.routes';
 import sectionRoute from './routes/section.routes';
 import bookRoutes from './routes/book.routes';
 import issueRoute from './routes/issue.routes';
-
+import searchRoute from './routes/search.routes';
 
 dotenv.config();
 const app = express();
@@ -20,6 +20,7 @@ app.use('/api/v1/sections', sectionRoute);
 app.use('/api/v1/books', bookRoutes);
 app.use('/api/v1/issues', issueRoute);
 app.use('/api/v1/books', bookRoutes);
+app.use('/api/v1/search', searchRoute);
 
 app.use((req, res) => {
   res.status(404).send({
