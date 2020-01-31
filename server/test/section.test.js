@@ -90,4 +90,40 @@ describe('Section', () => {
         done();
       });
   });
+
+  it('it should return 404 if section is not found', (done) => {
+    chai
+      .request(app)
+      .patch('/api/v1/sections/787853786')
+      .send({
+        sectionName: 'Updated section',
+      })
+      .set('x-auth-token', withAdminAccessToken)
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('status');
+        expect(res.body).to.have.property('error');
+        expect(res.body.error).to.deep.equal('Section not found');
+        done();
+      });
+  });
+
+  it('it should update section', (done) => {
+    chai
+      .request(app)
+      .patch('/api/v1/sections/e80a1be0-428d-11ea-9434-ab08a1e03ed1')
+      .send({
+        sectionName: 'Updated section',
+      })
+      .set('x-auth-token', withAdminAccessToken)
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('status');
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.deep.equal('Section edited successfully');
+        done();
+      });
+  });
 });

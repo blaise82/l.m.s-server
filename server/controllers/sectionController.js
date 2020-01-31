@@ -79,5 +79,51 @@ class SectionController {
       });
     }
   }
+
+  static async editSection(req, res) {
+    try {
+      const { sectionId } = req.params;
+      const { sectionName } = req.body;
+
+      if (req.user.isAdmin !== true) {
+        return res.status(401).json({
+          status: 401,
+          error: 'You are not allowed to perform this action',
+        });
+      }
+
+      const foundSection = await Section.findOne({
+        where: {
+          sectionId,
+        },
+      });
+
+      if (!foundSection) {
+        return res.status(404).json({
+          status: 404,
+          error: 'Section not found',
+        });
+      }
+
+      await Section.update(
+        { sectionName },
+        { where: { sectionId } },
+      );
+      return res.status(200).json({
+        status: 200,
+        message: 'Section edited successfully',
+        data: {
+          sectionId,
+          sectionName,
+        },
+      });
+    } catch (err) {
+      return res.status(500).json({
+        status: 500,
+        message: 'server error',
+        data: err.message,
+      });
+    }
+  }
 }
 export default SectionController;
