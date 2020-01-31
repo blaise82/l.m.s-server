@@ -6,4 +6,5 @@ import isLoggedIn from '../middleware/Auth/isLogged';
 const router = express.Router();
 router.post('/', [issueValidator, isLoggedIn], issueBook.add);
 router.get('/', isLoggedIn, issueBook.byMember);
+router.get('/admin', isLoggedIn, issueBook.issuedBooks);
 export default router;
