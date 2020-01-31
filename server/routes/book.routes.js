@@ -9,5 +9,6 @@ const routes = Router();
 routes.post('/', isLoggedIn, validateBook, bookController.createBook);
 routes.get('/', isLoggedIn, bookController.viewAvailableBooks);
 routes.delete('/:id', [paramsValidator, isLoggedIn], bookController.deleteBook);
+routes.put('/:id', [paramsValidator, isLoggedIn, validateBook], bookController.editBook);
 
 export default routes;

@@ -121,4 +121,49 @@ describe('Library management system', () => {
         });
     });
   });
+  describe('Editing a book', () => {
+    it('Should not edit book when it doesn\'t exist', (done) => {
+      Chai.request(index)
+        .put('/api/v1/books/5ec8fd60-434b-11ea-9222-fbd05c974c49')
+        .set('x-auth-token', adminAccessToken)
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.should.have.property('error', 'Book is not found');
+          done();
+        });
+    });
+    it('Should allow guid format for book id', (done) => {
+      Chai.request(index)
+        .put('/api/v1/books/5ec8fd60-434b-14c49')
+        .set('x-auth-token', adminAccessToken)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have.property('error', 'Please use a valide id');
+          done();
+        });
+    });
+    it('Should not edit book if there are validation errors', (done) => {
+      Chai.request(index)
+        .put('/api/v1/books/b70c27ce-80aa-40e2-98cf-eb5ebf734269')
+        .set('x-auth-token', adminAccessToken)
+        .send(bookWrong)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have.property('errors');
+          done();
+        });
+    });
+    it('Should edit book successfully', (done) => {
+      Chai.request(index)
+        .put('/api/v1/books/b70c27ce-80aa-40e2-98cf-eb5ebf734269')
+        .set('x-auth-token', adminAccessToken)
+        .send(book)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('message');
+          res.body.should.have.property('data');
+          done();
+        });
+    });
+  });
 });

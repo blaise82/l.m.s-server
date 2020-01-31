@@ -130,6 +130,83 @@ class bookController {
       data: availableBooks,
     });
   }
+
+  static async editBook(req, res) {
+    try {
+      if (req.user.isAdmin !== true) {
+        return res.status(401).json({
+          status: 401,
+          error: 'You are not allowed to perform this action',
+        });
+      }
+
+      const bookId = req.params.id;
+      const bookExist = await Books.findOne({
+        where: {
+          isbnNumber: bookId.trim(),
+        },
+      });
+
+      if (!bookExist) {
+        return res.status(404).json({
+          status: 404,
+          error: 'Book is not found',
+        });
+      }
+      const {
+        bookName, author, description,
+        bookPrice, status, section,
+      } = req.body;
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty(400)) {
+        return res.status(400).json({
+          status: 400,
+          errors: errors.array(),
+        });
+      }
+      const sectionExist = await Section.findOne({
+        where: {
+          sectionName: section.toUpperCase().trim(),
+        },
+      });
+      if (!sectionExist) {
+        return res.status(404).json({
+          status: 404,
+          error: 'The section you entered is not available',
+        });
+      }
+      const editBook = await Books.update(
+        {
+          bookName,
+          author,
+          description,
+          bookPrice,
+          status,
+          sectionId: sectionExist.sectionId,
+        },
+        {
+          where:
+          { isbnNumber: bookId },
+          returning: true,
+          plain: true,
+        },
+      );
+
+      if (editBook) {
+        return res.status(200).json({
+          status: 200,
+          message: 'Book updated successfully',
+          data: editBook[1],
+        });
+      }
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        error: error.message,
+      });
+    }
+  }
 }
 
 export default bookController;
