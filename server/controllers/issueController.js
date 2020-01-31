@@ -1,5 +1,4 @@
 import moment from 'moment';
-import uuid from 'uuid';
 
 import { Books, Issues, User } from '../db/models';
 
@@ -89,6 +88,32 @@ class issueBook {
       message: 'The Books you borrowed',
       data: { borrowed },
     });
+  }
+
+  static async issuedBooks(req, res) {
+    try {
+      if (req.user.isAdmin !== true) {
+        return res.status(401).json({
+          status: 401,
+          error: 'You are not authorized to perform this action',
+        });
+      }
+      const issuedBooks = await Books.findAll({
+        where: {
+          status: 'issued',
+        },
+      });
+      return res.status(200).json({
+        status: 200,
+        message: 'All issued books',
+        data: issuedBooks,
+      });
+    } catch (error) {
+      return res.status().json({
+        status: 500,
+        error: error.message,
+      });
+    }
   }
 }
 

@@ -88,6 +88,18 @@ describe('Library management system', () => {
       });
   });
 
+  it('Should view all issued books books', (done) => {
+    Chai.request(index)
+      .get('/api/v1/issues/admin')
+      .set('x-auth-token', adminAccessToken)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.have.property('message', 'All issued books');
+        res.body.should.have.property('data');
+        done();
+      });
+  });
+
   describe('Deleting book', () => {
     it('Should not fire up delete query when book doesn\'t exist', (done) => {
       Chai.request(index)
