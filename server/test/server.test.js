@@ -5,12 +5,14 @@ import app from '../index';
 
 chai.use(chaiHttp);
 describe('SERVER CONFIG CHECK', () => {
-  it('Should return Server Is On', (done) => {
+  it('Should return greeting message', (done) => {
     chai
       .request(app)
       .get('/')
       .end((err, res) => {
-        expect(res);
+        expect(res).to.have.status(200);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.be.equal('Welcome to L.M.S - Your Library Managment System');
         done();
       });
   });

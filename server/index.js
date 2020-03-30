@@ -9,12 +9,15 @@ import searchRoute from './routes/search.routes';
 
 dotenv.config();
 const app = express();
+const port = process.env.PORT || 5000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-
-app.get('/', (req, res) => res.send('Server Is On'));
+app.get('/', (req, res) => res.status(200).send({
+  status: 200,
+  message: 'Welcome to L.M.S - Your Library Managment System',
+}));
 app.use('/api/v1/auth', userRoute);
 app.use('/api/v1/sections', sectionRoute);
 app.use('/api/v1/books', bookRoutes);
@@ -22,13 +25,13 @@ app.use('/api/v1/issues', issueRoute);
 app.use('/api/v1/books', bookRoutes);
 app.use('/api/v1/search', searchRoute);
 
-app.use((req, res) => {
-  res.status(404).send({
-    status: 404,
-    error: 'Oh!, This Page does not exist',
-  });
-});
+app.use((req, res) => res.status(404).send({
+  status: 404,
+  error: 'Oh!, This Page does not exist',
+}));
 
-app.listen(process.env.PORT || 5000);
+app.listen(port, () => {
+  console.log(`Server is running on PORT ${port}...`);
+});
 
 export default app;
