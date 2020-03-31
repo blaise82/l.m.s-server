@@ -10,7 +10,7 @@
   "scripts": {
     "test": "NODE_ENV=testing npm run migrateTest && NODE_ENV=testing nyc --reporter=html --reporter=text mocha  --require @babel/register 'server/**/**test.js' --exit",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
-    "start": "node build/index.js",
+    "start": "node --require @babel/polyfill build/index.js",
     "dev-start": "nodemon --exec babel-node server/index.js",
     "createTables": "node_modules/.bin/sequelize db:migrate && node_modules/.bin/sequelize db:seed:all",
     "migrateTest": "node_modules/.bin/sequelize db:migrate:undo:all && node_modules/.bin/sequelize db:migrate && sequelize db:seed:all",
@@ -33,6 +33,11 @@
   },
   "homepage": "https://github.com/blaise82/l.m.s#readme",
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/node": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/register": "^7.8.3",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "coveralls": "^3.0.9",
@@ -46,25 +51,23 @@
     "sequelize-cli": "^5.5.1"
   },
   "dependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.3",
-    "@babel/node": "^7.8.3",
     "@babel/plugin-transform-runtime": "^7.8.3",
     "@babel/polyfill": "^7.8.3",
-    "@babel/preset-env": "^7.8.3",
-    "@babel/register": "^7.8.3",
-    "@babel/runtime": "^7.9.2",
+    "babel-plugin-module-resolver": "^4.0.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-validator": "^6.3.1",
     "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
+    "morgan": "^1.10.0",
     "pg": "^7.17.1",
     "sequelize": "^5.21.3",
-    "uuid": "^3.4.0"
+    "uuid": "^3.4.0",
+    "vue-runtime-helpers": "^1.1.2"
   },
   "nyc": {
     "include": "server",
