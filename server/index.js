@@ -9,7 +9,6 @@ import searchRoute from './routes/search.routes';
 
 dotenv.config();
 const app = express();
-const port = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -30,8 +29,8 @@ app.use((req, res) => res.status(404).send({
   error: 'Oh!, This Page does not exist',
 }));
 
-app.listen(port, () => {
-  console.log(`Server is running on PORT ${port}...`);
+app.listen(process.env.PORT || 3000, () => {
+  console.log('Server is running on PORT 3000...');
 });
 
 export default app;
