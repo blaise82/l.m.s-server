@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "engines": {
-    "node": "12",
+    "node": "11",
     "npm": "6.13.4"
   },
   "scripts": {
     "test": "NODE_ENV=testing npm run migrateTest && NODE_ENV=testing nyc --reporter=html --reporter=text mocha  --require @babel/register 'server/**/**test.js' --exit",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
-    "start": "node --require @babel/polyfill build/index.js",
+    "start": "node build/index.js",
     "dev-start": "nodemon --exec babel-node server/index.js",
     "createTables": "node_modules/.bin/sequelize db:migrate && node_modules/.bin/sequelize db:seed:all",
     "migrateTest": "node_modules/.bin/sequelize db:migrate:undo:all && node_modules/.bin/sequelize db:migrate && sequelize db:seed:all",
@@ -50,10 +50,10 @@
     "@babel/core": "^7.8.3",
     "@babel/node": "^7.8.3",
     "@babel/plugin-transform-runtime": "^7.8.3",
-    "@babel/polyfill": "^7.8.7",
+    "@babel/polyfill": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
     "@babel/register": "^7.8.3",
-    "@babel/runtime": "^7.8.3",
+    "@babel/runtime": "^7.9.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
