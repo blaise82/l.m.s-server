@@ -17,7 +17,7 @@
     "dbMigrate": "sequelize db:migrate:undo:all && sequelize db:migrate",
     "clean": "rm -rf build && mkdir build",
     "build-src": "babel -d ./build ./server -s",
-    "build": "npm run dbMigrate && npm run clean && npm run build-src"
+    "build": "npm run migrateTest && npm run clean && npm run build-src"
   },
   "repository": {
     "type": "git",

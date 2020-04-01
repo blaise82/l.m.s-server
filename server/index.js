@@ -2,7 +2,6 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import morgan from 'morgan';
 import userRoute from './routes/user.routes';
 import sectionRoute from './routes/section.routes';
 import bookRoutes from './routes/book.routes';
@@ -17,7 +16,6 @@ app.use(bodyParser.json());
 
 
 app.use(cors());
-app.use(require('morgan')('dev'));
 
 app.get('/', (req, res) => res.status(200).send({
   status: 200,
